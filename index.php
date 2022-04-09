@@ -1,6 +1,6 @@
 <?php
-include "header.php";
-include "navbar.php";
+include "partials/header.php";
+include "partials/navbar.php";
 ?>
 <div class="wrapper">
     <div class="container-fluid">
@@ -62,5 +62,5 @@ include "navbar.php";
     </div>
 </div>
 <?php
-include "footer.php";
+include "partials/footer.php";
 ?>
