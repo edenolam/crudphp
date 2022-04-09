@@ -19,8 +19,9 @@
                     </div>
                 </div>
                 <form class="d-flex">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                    <div class="input-group search-box">
+                        <input type="text" autocomplete="off" class="form-control" placeholder="Search country...">
+                        <div class="result"></div>
                         <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button>
                     </div>
                 </form>
