@@ -93,13 +93,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     unset($pdo);
 }
 
-include "partials/header.php";
-include "partials/navbar.php";
+
 ?>
-<div class="wrapper_register">
-    <h2>Sign Up</h2>
-    <p>Please fill this form to create an account.</p>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Signin Template for Bootstrap</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Custom styles for this template -->
+        <link href="signin.css" rel="stylesheet">
+    </head>
+
+<body class="text-center">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="form-signin">
+        <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
         <div class="form-group">
             <label>Username</label>
             <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
@@ -120,8 +133,7 @@ include "partials/navbar.php";
             <input type="reset" class="btn btn-secondary ml-2" value="Reset">
         </div>
         <p>Already have an account? <a href="login.php">Login here</a>.</p>
+        <p class="mt-5 mb-3 text-muted">&copy; 2022 - edenolam.dev</p>
     </form>
-</div>
-<?php
-include "partials/footer.php";
-?>
+</body>
+</html>
