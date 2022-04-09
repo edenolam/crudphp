@@ -8,7 +8,7 @@ body {
     margin: 0 auto;
 }
 
-.wrapper_register {
+.wrapper_register, .wrapper_reset_pwd, .wrapper_login {
     width: 360px;
     padding: 20px;
 }
