@@ -1,6 +1,6 @@
 <?php
 // Process delete operation after confirmation
-if(isset($_POST["id"]) && !empty($_POST["id"])){
+if (isset($_POST["id"]) && !empty($_POST["id"])) {
     // Include config file
     require_once "config.php";
 
@@ -8,7 +8,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     $sql = "DELETE FROM employees WHERE id = :id";
 
 
-    if($statement = $pdo->prepare($sql)){
+    if ($statement = $pdo->prepare($sql)) {
         // Bind variables to the prepared statement as parameters
         $statement->bindParam(":id", $param_id);
 
@@ -16,11 +16,11 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $param_id = trim($_POST["id"]);
 
         // Attempt to execute the prepared statement
-        if($statement->execute()){
+        if ($statement->execute()) {
             // Records deleted successfully. Redirect to landing page
             header("location: index.php");
             exit();
-        } else{
+        } else {
             echo "Oops! Something went wrong. Please try again later.";
         }
     }
@@ -30,20 +30,18 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 
     // Close connection
     unset($pdo);
-} else{
+} else {
     // Check existence of id parameter
-    if(empty(trim($_GET["id"]))){
+    if (empty(trim($_GET["id"]))) {
         // URL doesn't contain id parameter. Redirect to error page
         header("location: error.php");
         exit();
     }
 }
 
-
 include "header.php";
 include "navbar.php";
 ?>
-
 <div class="wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -63,5 +61,6 @@ include "navbar.php";
         </div>
     </div>
 </div>
-</body>
-</html>
+<?php
+include "footer.php";
+?>
