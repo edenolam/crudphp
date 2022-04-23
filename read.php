@@ -54,20 +54,33 @@ include "partials/navbar.php";
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="mt-5 mb-3">View Record</h1>
-                <div class="form-group">
-                    <label>Name</label>
-                    <p><b><?php echo $row["name"]; ?></b></p>
+                <h1 class="mt-5 mb-3">Enregistrement <?php echo $row["id"]; ?></h1>
+
+                <div class="card" style="width: 30rem;">
+                    <img class="card-img-top" src="upload/bague%20gzn%20design.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Carte employé de <?php echo $row["name"]; ?></h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Name
+                            <span class="badge"><b><?php echo $row["name"]; ?></b></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Adresse
+                            <span class="badge"><b><?php echo $row["address"]; ?></b></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Salaire
+                            <span class="badge"><b><?php echo $row["salary"]; ?></b></span>
+                        </li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="index.php" class="card-link">Retour</a>
+                        <a href="update.php?id=<?php echo $row['id']; ?>" class="card-link">Modifier</a>
+                        <a href="delete.php?id=<?php echo $row['id']; ?>" class="card-link">Supprimer</a>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Address</label>
-                    <p><b><?php echo $row["address"]; ?></b></p>
-                </div>
-                <div class="form-group">
-                    <label>Salary</label>
-                    <p><b><?php echo $row["salary"]; ?></b></p>
-                </div>
-                <p><a href="index.php" class="btn btn-primary">Back</a></p>
             </div>
         </div>
     </div>

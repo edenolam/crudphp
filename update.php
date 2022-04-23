@@ -3,8 +3,12 @@
 require_once "config.php";
 
 // Define variables and initialize with empty values
-$name = $address = $salary = "";
-$name_err = $address_err = $salary_err = "";
+$name = "";
+$address = "";
+$salary = "";
+$name_err = "";
+$address_err = "";
+$salary_err = "";
 
 // Processing form data when form is submitted
 if (isset($_POST["id"]) && !empty($_POST["id"])) {

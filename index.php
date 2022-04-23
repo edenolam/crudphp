@@ -7,8 +7,8 @@ include "partials/navbar.php";
         <div class="row">
             <div class="col-md-12">
                 <div class="mt-5 mb-3 clearfix">
-                    <h2 class="pull-left">Employees Details</h2>
-                    <a href="create.php" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Add New Employee</a>
+                    <h2 class="pull-left">Liste des employées</h2>
+                    <a href="create.php" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Ajouter un employé</a>
                 </div>
                 <?php
                 // Include config file
@@ -22,9 +22,9 @@ include "partials/navbar.php";
                         echo "<thead>";
                         echo "<tr>";
                         echo "<th>#</th>";
-                        echo "<th>Name</th>";
-                        echo "<th>Address</th>";
-                        echo "<th>Salary</th>";
+                        echo "<th>Nom</th>";
+                        echo "<th>Adresse</th>";
+                        echo "<th>Salaire</th>";
                         echo "<th>Action</th>";
                         echo "</tr>";
                         echo "</thead>";
@@ -47,10 +47,10 @@ include "partials/navbar.php";
                         // Free result set
                         unset($result);
                     } else {
-                        echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
+                        echo '<div class="alert alert-danger"><em>Aucun enregistrement.</em></div>';
                     }
                 } else {
-                    echo "Oops! Something went wrong. Please try again later.";
+                    echo "Oops!. Veuillez réésseyer plus tard.";
                 }
 
                 // Close connection

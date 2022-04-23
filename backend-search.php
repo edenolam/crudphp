@@ -6,7 +6,7 @@ require_once "config.php";
 try{
     if(isset($_REQUEST["term"])){
         // create prepared statement
-        $sql = "SELECT * FROM countries WHERE name LIKE :term";
+        $sql = "SELECT * FROM employees WHERE name LIKE :term";
         $stmt = $pdo->prepare($sql);
         $term = $_REQUEST["term"] . '%';
         // bind parameters to statement
