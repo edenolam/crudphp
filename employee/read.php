@@ -57,7 +57,7 @@ include "partials/navbar.php";
                 <h1 class="mt-5 mb-3">Enregistrement <?php echo $row["id"]; ?></h1>
 
                 <div class="card" style="width: 30rem;">
-                    <img class="card-img-top" src="upload/bague%20gzn%20design.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="../upload/bague%20gzn%20design.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Carte employé de <?php echo $row["name"]; ?></h5>
                     </div>
@@ -76,7 +76,7 @@ include "partials/navbar.php";
                         </li>
                     </ul>
                     <div class="card-body">
-                        <a href="index.php" class="card-link">Retour</a>
+                        <a href="../index.php" class="card-link">Retour</a>
                         <a href="update.php?id=<?php echo $row['id']; ?>" class="card-link">Modifier</a>
                         <a href="delete.php?id=<?php echo $row['id']; ?>" class="card-link">Supprimer</a>
                     </div>

@@ -1,14 +1,10 @@
 <?php
 // Include config file
-require_once "config.php";
+require "./../config.php";
 
 // Define variables and initialize with empty values
 $name = "";
-$address = "";
-$salary = "";
 $name_err = "";
-$address_err = "";
-$salary_err = "";
 
 // Processing form data when form is submitted
 if (isset($_POST["id"]) && !empty($_POST["id"])) {
@@ -25,46 +21,24 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         $name = $input_name;
     }
 
-    // Validate address address
-    $input_address = trim($_POST["address"]);
-    if (empty($input_address)) {
-        $address_err = "Please enter an address.";
-    } else {
-        $address = $input_address;
-    }
-
-    // Validate salary
-    $input_salary = trim($_POST["salary"]);
-    if (empty($input_salary)) {
-        $salary_err = "Please enter the salary amount.";
-    } elseif (!ctype_digit($input_salary)) {
-        $salary_err = "Please enter a positive integer value.";
-    } else {
-        $salary = $input_salary;
-    }
-
     // Check input errors before inserting in database
-    if (empty($name_err) && empty($address_err) && empty($salary_err)) {
+    if (empty($name_err)) {
         // Prepare an update statement
-        $sql = "UPDATE employees SET name=:name, address=:address, salary=:salary WHERE id=:id";
+        $sql = "UPDATE company SET name=:name WHERE id=:id";
 
         if ($stmt = $pdo->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
             $stmt->bindParam(":name", $param_name);
-            $stmt->bindParam(":address", $param_address);
-            $stmt->bindParam(":salary", $param_salary);
             $stmt->bindParam(":id", $param_id);
 
             // Set parameters
             $param_name = $name;
-            $param_address = $address;
-            $param_salary = $salary;
             $param_id = $id;
 
             // Attempt to execute the prepared statement
             if ($stmt->execute()) {
                 // Records updated successfully. Redirect to landing page
-                header("location: index.php");
+                header("location: list.php");
                 exit();
             } else {
                 echo "Oops! Something went wrong. Please try again later.";
@@ -84,7 +58,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         $id = trim($_GET["id"]);
 
         // Prepare a select statement
-        $sql = "SELECT * FROM employees WHERE id = :id";
+        $sql = "SELECT * FROM company WHERE id = :id";
         if ($stmt = $pdo->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
             $stmt->bindParam(":id", $param_id);
@@ -101,8 +75,6 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
                     // Retrieve individual field value
                     $name = $row["name"];
-                    $address = $row["address"];
-                    $salary = $row["salary"];
                 } else {
                     // URL doesn't contain valid id. Redirect to error page
                     header("location: error.php");
@@ -129,44 +101,33 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
 
 <?php
-include "partials/header.php";
-include "partials/navbar.php";
+include "../partials/header.php";
+include "../partials/navbar.php";
 ?>
 <div class="wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h2 class="mt-5">Update Record</h2>
+                <h2 class="mt-5">modifier</h2>
                 <p>Please edit the input values and submit to update the employee record.</p>
                 <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
                     <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" name="name"
-                               class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>"
-                               value="<?php echo $name; ?>">
+                        <label>
+                            Nom
+                            <input type="text" name="name"
+                                   class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>"
+                                   value="<?php echo $name; ?>">
+                        </label>
                         <span class="invalid-feedback"><?php echo $name_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label>Address</label>
-                        <textarea name="address"
-                                  class="form-control <?php echo (!empty($address_err)) ? 'is-invalid' : ''; ?>"><?php echo $address; ?></textarea>
-                        <span class="invalid-feedback"><?php echo $address_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label>Salary</label>
-                        <input type="text" name="salary"
-                               class="form-control <?php echo (!empty($salary_err)) ? 'is-invalid' : ''; ?>"
-                               value="<?php echo $salary; ?>">
-                        <span class="invalid-feedback"><?php echo $salary_err; ?></span>
                     </div>
                     <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                     <input type="submit" class="btn btn-primary" value="Submit">
-                    <a href="index.php" class="btn btn-secondary ml-2">Cancel</a>
+                    <a href="../index.php" class="btn btn-secondary ml-2">Cancel</a>
                 </form>
             </div>
         </div>
     </div>
 </div>
 <?php
-include "partials/footer.php";
+include "../partials/footer.php";
 ?>

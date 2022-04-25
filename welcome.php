@@ -15,10 +15,10 @@ include "partials/navbar.php";
 ?>
 <div class="wrapper_welcome text-center">
 
-    <h1 class="my-5">Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to your site.</h1>
+    <h1 class="my-5">Bonjour, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Bienvenue sur votre site.</h1>
     <p>
-        <a href="reset-password.php" class="btn btn-info">Reset Your Password</a>
-        <a href="logout.php" class="btn btn-danger ml-3">Sign Out</a>
+        <a href="reset-password.php" class="btn btn-info">Reinitialiser mot de passe</a>
+        <a href="logout.php" class="btn btn-danger ml-3">Deconnexion</a>
     </p>
 </div>
 <?php

@@ -3,11 +3,18 @@
 require_once "config.php";
 
 // Define variables and initialize with empty values
-$name = $address = $salary = "";
-$name_err = $address_err = $salary_err = "";
+$name = "";
+$address = "";
+$salary = "";
+$name_err = "";
+$address_err = "";
+$salary_err = "";
 
 // Processing form data when form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST["id"]) && !empty($_POST["id"])) {
+    // Get hidden input value
+    $id = $_POST["id"];
+
     // Validate name
     $input_name = trim($_POST["name"]);
     if (empty($input_name)) {
@@ -18,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name = $input_name;
     }
 
-    // Validate address
+    // Validate address address
     $input_address = trim($_POST["address"]);
     if (empty($input_address)) {
         $address_err = "Please enter an address.";
@@ -38,23 +45,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check input errors before inserting in database
     if (empty($name_err) && empty($address_err) && empty($salary_err)) {
-        // Prepare an insert statement
-        $sql = "INSERT INTO employees (name, address, salary) VALUES (:name, :address, :salary)";
+        // Prepare an update statement
+        $sql = "UPDATE employees SET name=:name, address=:address, salary=:salary WHERE id=:id";
 
         if ($stmt = $pdo->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
             $stmt->bindParam(":name", $param_name);
             $stmt->bindParam(":address", $param_address);
             $stmt->bindParam(":salary", $param_salary);
+            $stmt->bindParam(":id", $param_id);
 
             // Set parameters
             $param_name = $name;
             $param_address = $address;
             $param_salary = $salary;
+            $param_id = $id;
 
             // Attempt to execute the prepared statement
             if ($stmt->execute()) {
-                // Records created successfully. Redirect to landing page
+                // Records updated successfully. Redirect to landing page
                 header("location: index.php");
                 exit();
             } else {
@@ -68,8 +77,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Close connection
     unset($pdo);
-}
+} else {
+    // Check existence of id parameter before processing further
+    if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
+        // Get URL parameter
+        $id = trim($_GET["id"]);
 
+        // Prepare a select statement
+        $sql = "SELECT * FROM employees WHERE id = :id";
+        if ($stmt = $pdo->prepare($sql)) {
+            // Bind variables to the prepared statement as parameters
+            $stmt->bindParam(":id", $param_id);
+
+            // Set parameters
+            $param_id = $id;
+
+            // Attempt to execute the prepared statement
+            if ($stmt->execute()) {
+                if ($stmt->rowCount() == 1) {
+                    /* Fetch result row as an associative array. Since the result set
+                    contains only one row, we don't need to use while loop */
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    // Retrieve individual field value
+                    $name = $row["name"];
+                    $address = $row["address"];
+                    $salary = $row["salary"];
+                } else {
+                    // URL doesn't contain valid id. Redirect to error page
+                    header("location: error.php");
+                    exit();
+                }
+
+            } else {
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+        }
+
+        // Close statement
+        unset($stmt);
+
+        // Close connection
+        unset($pdo);
+    } else {
+        // URL doesn't contain id parameter. Redirect to error page
+        header("location: error.php");
+        exit();
+    }
+}
+?>
+
+
+<?php
 include "partials/header.php";
 include "partials/navbar.php";
 ?>
@@ -77,9 +136,9 @@ include "partials/navbar.php";
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h2 class="mt-5">Create Record</h2>
-                <p>Please fill this form and submit to add employee record to the database.</p>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <h2 class="mt-5">Update Record</h2>
+                <p>Please edit the input values and submit to update the employee record.</p>
+                <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
                     <div class="form-group">
                         <label>Name</label>
                         <input type="text" name="name"
@@ -100,10 +159,9 @@ include "partials/navbar.php";
                                value="<?php echo $salary; ?>">
                         <span class="invalid-feedback"><?php echo $salary_err; ?></span>
                     </div>
-
-
+                    <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                     <input type="submit" class="btn btn-primary" value="Submit">
-                    <a href="index.php" class="btn btn-secondary ml-2">Cancel</a>
+                    <a href="../index.php" class="btn btn-secondary ml-2">Cancel</a>
                 </form>
             </div>
         </div>

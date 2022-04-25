@@ -21,8 +21,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate new password
     if(empty(trim($_POST["new_password"]))){
         $new_password_err = "Please enter the new password.";
-    } elseif(strlen(trim($_POST["new_password"])) < 6){
-        $new_password_err = "Password must have atleast 6 characters.";
+    } elseif(strlen(trim($_POST["new_password"])) < 5){
+        $new_password_err = "Password must have atleast 5 characters.";
     } else{
         $new_password = trim($_POST["new_password"]);
     }
@@ -78,13 +78,17 @@ include "partials/navbar.php";
     <p>Please fill out this form to reset your password.</p>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="form-group">
-            <label>New Password</label>
-            <input type="password" name="new_password" class="form-control <?php echo (!empty($new_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $new_password; ?>">
+            <label>
+                Nouveau mot de passe
+                <input type="password" name="new_password" class="form-control <?php echo (!empty($new_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $new_password; ?>">
+            </label>
             <span class="invalid-feedback"><?php echo $new_password_err; ?></span>
         </div>
         <div class="form-group">
-            <label>Confirm Password</label>
-            <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>">
+            <label>
+                Confirmer mot de passe
+                <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>">
+            </label>
             <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
         </div>
         <div class="form-group">
